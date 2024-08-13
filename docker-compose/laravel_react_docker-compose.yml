@@ -3,7 +3,7 @@ version: '3'
 services:
   app:
     build: 
-      context: .
+      context: ./laravel_app
       dockerfile: Dockerfile
     image: laravel_image
     container_name: laravel_container
@@ -17,26 +17,23 @@ services:
     networks:
       - app-network
 
-  vue:
+  react:
     build:
-      context: ../vuejs
+      context: ./react_app
       dockerfile: Dockerfile
-    image: vuejs_image
-    container_name: vue_container
+    image: react_image
+    container_name: react_container
     ports:
       - "3000:3000"
     restart: unless-stopped
     networks:
       - app-network
 
-  db:
-    image: mysql:8.0.39-debian
-    container_name: my-mysql
-    restart: unless-stopped
+  mongodb:
+    image: mongo:latest
     environment:
-      MYSQL_DATABASE: yowl
-      MYSQL_PASSWORD: florette1234
-      MYSQL_USER: florette
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=florette54
     networks:
       - app-network
     ports:
