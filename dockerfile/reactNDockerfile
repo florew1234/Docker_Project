@@ -1,0 +1,26 @@
+#Base image
+FROM node:slim AS stage 
+
+#create app directory 
+WORKDIR /app
+
+#copy all package json files
+COPY package*.json ./
+
+#install all dependencies
+RUN npm install
+
+#Bundle app source
+COPY . .
+
+#Copy the .env and .env.development files
+# COPY .env .env.development ./
+
+#create a "dist" folder 
+# RUN npm run build
+
+#Expose the port on which the app will run 
+EXPOSE 8081
+
+#Start  the server using the prodcution
+CMD ["npm", "run","web"]
